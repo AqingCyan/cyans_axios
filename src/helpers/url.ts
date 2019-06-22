@@ -1,7 +1,7 @@
 /*
  * 处理url的工具
  */
-import { isObject, isDate } from './util'
+import { isPlainObject, isDate } from './util'
 
 /**
  * encode字符串
@@ -46,7 +46,7 @@ export function buildURL(url: string, params?: any): string {
     values.forEach(val => {
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)
