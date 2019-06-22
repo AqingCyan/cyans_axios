@@ -2,6 +2,7 @@
  * 公共类型定义文件
  */
 
+// method类型定义
 export type Method =
   | 'GET'
   | 'get'
@@ -18,6 +19,7 @@ export type Method =
   | 'patch'
   | 'PATCH'
 
+// axios请求体接口
 export interface AxiosRequestConfig {
   url: string
   method?: Method
