@@ -5,6 +5,7 @@
 import { AxiosRequestConfig } from './types'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
+import { processHeaders } from './helpers/headers'
 import xhr from './xhr'
 
 /**
@@ -22,6 +23,7 @@ function axios(config: AxiosRequestConfig): void {
  */
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformURL(config)
+  config.headers = transformHeaders(config) // 注意处理顺序，headers的处理应该在data处理之前，data处理之后就是JSON数据了
   config.data = transformRequestData(config)
 }
 
@@ -40,6 +42,15 @@ function transformURL(config: AxiosRequestConfig): string {
  */
 function transformRequestData(config: AxiosRequestConfig): any {
   return transformRequest(config.data)
+}
+
+/**
+ * 对请求中的headers做一个转化
+ * @param config 请求体配置
+ */
+function transformHeaders(config: AxiosRequestConfig): any {
+  const { headers = {}, data } = config
+  return processHeaders(headers, data)
 }
 
 export default axios
