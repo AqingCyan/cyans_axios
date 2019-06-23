@@ -2,6 +2,7 @@
  * 发送请求文件
  */
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
+import { createError } from './helpers/error'
 import { parseHeaders } from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
@@ -46,12 +47,12 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     // 处理网络错误
     request.onerror = function handleError() {
-      reject(new Error('NetWork Error'))
+      reject(createError('Network Error', config, null, request))
     }
 
     // 处理超时请求
     request.ontimeout = function handleTimeout() {
-      reject(new Error(`Request timeout of ${timeout} ms`))
+      reject(createError(`Request timeout of ${timeout} ms`, config, 'ECONNABORTED', request))
     }
 
     Object.keys(headers).forEach(name => {
@@ -73,7 +74,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (response.status >= 200 && response.status < 300) {
         resolve(response)
       } else {
-        reject(new Error(`Request failed with status code ${response.status}`))
+        reject(
+          createError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        )
       }
     }
   })
