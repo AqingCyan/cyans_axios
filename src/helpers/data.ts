@@ -14,3 +14,19 @@ export function transformRequest(data: any): any {
   }
   return data
 }
+
+/**
+ * 转化响应体中的data，在不指定数据类型的情况下将字符串转化成对应JSON对象格式
+ * @param data
+ */
+export function transformResponse(data: any): any {
+  if (typeof data === 'string') {
+    // 尝试转化成JSON
+    try {
+      data = JSON.parse(data)
+    } catch (e) {
+      // do nothing
+    }
+  }
+  return data
+}
