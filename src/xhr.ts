@@ -5,21 +5,32 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { parseHeaders } from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-  return new Promise(resolve => {
-    const { data = null, url, method = 'get', headers, responseType } = config
+  return new Promise((resolve, reject) => {
+    const { data = null, url, method = 'get', headers, responseType, timeout } = config
     // 实例化请求并发送
     const request = new XMLHttpRequest()
+
     // 如果设置了responseType
     if (responseType) {
       request.responseType = responseType
     }
 
+    // 如果设置了超时时间
+    if (timeout) {
+      request.timeout = timeout
+    }
+
     request.open(method.toUpperCase(), url, true)
 
+    // 当响应成功分情况处理
     request.onreadystatechange = function handleLoad() {
       if (request.readyState !== 4) {
         return
       }
+      if (request.status === 0) {
+        return
+      }
+
       const responseHeaders = parseHeaders(request.getAllResponseHeaders())
       const responseData = responseType !== 'text' ? request.response : request.responseText
       const response: AxiosResponse = {
@@ -30,7 +41,17 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request
       }
-      resolve(response)
+      handleResponse(response)
+    }
+
+    // 处理网络错误
+    request.onerror = function handleError() {
+      reject(new Error('NetWork Error'))
+    }
+
+    // 处理超时请求
+    request.ontimeout = function handleTimeout() {
+      reject(new Error(`Request timeout of ${timeout} ms`))
     }
 
     Object.keys(headers).forEach(name => {
@@ -43,5 +64,17 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     })
 
     request.send(data)
+
+    /**
+     * 封装辅助函数根据status判断是否异常并处理
+     * @param response
+     */
+    function handleResponse(response: AxiosResponse): void {
+      if (response.status >= 200 && response.status < 300) {
+        resolve(response)
+      } else {
+        reject(new Error(`Request failed with status code ${response.status}`))
+      }
+    }
   })
 }
