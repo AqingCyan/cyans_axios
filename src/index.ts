@@ -2,7 +2,7 @@
  * 入口文件
  */
 
-import { AxiosRequestConfig } from './types'
+import { AxiosRequestConfig, AxiosPromise } from './types'
 import { buildURL } from './helpers/url'
 import { transformRequest } from './helpers/data'
 import { processHeaders } from './helpers/headers'
@@ -12,9 +12,9 @@ import xhr from './xhr'
  * 主入口函数
  * @param config 请求体配置
  */
-function axios(config: AxiosRequestConfig): void {
+function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
-  xhr(config)
+  return xhr(config)
 }
 
 /**
