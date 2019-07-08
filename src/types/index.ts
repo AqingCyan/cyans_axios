@@ -31,8 +31,8 @@ export interface AxiosRequestConfig {
 }
 
 // axios响应体接口定义
-export interface AxiosResponse {
-  data: any
+export interface AxiosResponse<T = any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -41,7 +41,7 @@ export interface AxiosResponse {
 }
 
 // axios返回对象类型（是一个promise）
-export interface AxiosPromise extends Promise<AxiosResponse> {}
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
 // axios异常信息接口
 export interface AxiosError extends Error {
@@ -54,24 +54,25 @@ export interface AxiosError extends Error {
 
 // 定义一个Axios接口，包含axios公用方法和属性
 export interface Axios {
-  request(config: AxiosRequestConfig): AxiosPromise
+  request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
 
-  get(url: string, config?: AxiosRequestConfig): AxiosPromise
+  get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  delete(url: string, config?: AxiosRequestConfig): AxiosPromise
+  delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  head(url: string, config?: AxiosRequestConfig): AxiosPromise
+  head<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  options(url: string, config?: AxiosRequestConfig): AxiosPromise
+  options<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  post(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  put(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 
-  patch(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise
+  patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-// Axios混合类型接口
+// Axios混合类型接口（可以重载）
 export interface AxiosInstance extends Axios {
-  (config: AxiosRequestConfig): AxiosPromise
+  <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+  <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
