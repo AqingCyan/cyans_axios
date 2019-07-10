@@ -28,6 +28,8 @@ export interface AxiosRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
 
   // 索引签名
   [propName: string]: any
@@ -83,12 +85,14 @@ export interface Axios {
 // Axios混合类型接口（可以重载）
 export interface AxiosInstance extends Axios {
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
+
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
 // 拦截器管理类
 export interface AxiosInterceptorManager<T> {
   use(resolve: ResolveFn<T>, rejected?: RejectFn): number
+
   eject(id: number): void
 }
 
@@ -98,4 +102,8 @@ export interface ResolveFn<T> {
 
 export interface RejectFn {
   (error: any): any
+}
+
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
 }
