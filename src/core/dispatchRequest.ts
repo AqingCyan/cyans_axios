@@ -13,6 +13,8 @@ import transform from './transform'
  * @param config 请求体配置
  */
 function axios(config: AxiosRequestConfig): AxiosPromise {
+  // 发送请求前检测cancelToken是否被使用过
+  throwIfCancellationRequested(config)
   processConfig(config)
   return xhr(config).then(res => {
     return transformResponseData(res)
@@ -45,6 +47,12 @@ function transformURL(config: AxiosRequestConfig): string {
 function transformResponseData(res: AxiosResponse): AxiosResponse {
   res.data = transform(res.data, res.headers, res.config.transformResponse)
   return res
+}
+
+function throwIfCancellationRequested(config: AxiosRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequest()
+  }
 }
 
 export default axios

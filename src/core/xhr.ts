@@ -7,7 +7,7 @@ import { parseHeaders } from '../helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout } = config
+    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken } = config
     // 实例化请求并发送
     const request = new XMLHttpRequest()
 
@@ -63,6 +63,14 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         request.setRequestHeader(name, headers[name])
       }
     })
+
+    // 判断是否执行取消逻辑
+    if (cancelToken) {
+      cancelToken.promise.then(reason => {
+        request.abort()
+        reject(reason)
+      })
+    }
 
     request.send(data)
 
