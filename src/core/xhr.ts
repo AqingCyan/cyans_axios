@@ -7,7 +7,16 @@ import { parseHeaders } from '../helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, url, method = 'get', headers, responseType, timeout, cancelToken } = config
+    const {
+      data = null,
+      url,
+      method = 'get',
+      headers,
+      responseType,
+      timeout,
+      cancelToken,
+      withCredentials
+    } = config
     // 实例化请求并发送
     const request = new XMLHttpRequest()
 
@@ -19,6 +28,10 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     // 如果设置了超时时间
     if (timeout) {
       request.timeout = timeout
+    }
+
+    if (withCredentials) {
+      request.withCredentials = withCredentials
     }
 
     request.open(method.toUpperCase(), url!, true)
