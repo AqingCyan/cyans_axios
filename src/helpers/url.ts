@@ -3,6 +3,11 @@
  */
 import { isPlainObject, isDate } from './util'
 
+interface URLOrigin {
+  protocol: string
+  host: string
+}
+
 /**
  * encode字符串
  * @param val 待处理字符串
@@ -65,4 +70,27 @@ export function buildURL(url: string, params?: any): string {
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
   return url
+}
+
+/**
+ * 判断是否同域
+ * @param requestURL
+ */
+export function isURLSameOrigin(requestURL: string): boolean {
+  const parsedOrigin = resolveURL(requestURL)
+  return (
+    parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
+  )
+}
+
+const urlParsingNode = document.createElement('a')
+const currentOrigin = resolveURL(window.location.href)
+
+function resolveURL(url: string): URLOrigin {
+  urlParsingNode.setAttribute('href', url)
+  const { protocol, host } = urlParsingNode
+  return {
+    protocol,
+    host
+  }
 }
