@@ -1,6 +1,8 @@
 import axios from '../../src/index'
 import 'nprogress/nprogress.css'
 import NProgress from 'nprogress'
+import { AxiosError } from '../../src/helpers/error'
+import qs from 'qs'
 
 // document.cookie = 'a=b'
 //
@@ -82,18 +84,17 @@ import NProgress from 'nprogress'
 //   }
 // })
 
-axios.post('/more/post', {
-  a: 1
-}, {
-  auth: {
-    username: 'Yee',
-    password: '123456'
-  }
-}).then(res => {
-  console.log(res)
-})
+// axios.post('/more/post', {
+//   a: 1
+// }, {
+//   auth: {
+//     username: 'Yee',
+//     password: '123456'
+//   }
+// }).then(res => {
+//   console.log(res)
+// })
 
-//
 // axios.get('/more/304').then(res => {
 //   console.log(res)
 // }).catch((e: AxiosError) => {
@@ -109,7 +110,7 @@ axios.post('/more/post', {
 // }).catch((e: AxiosError) => {
 //   console.log(e.message)
 // })
-//
+
 // axios.get('/more/get', {
 //   params: new URLSearchParams('a=b&c=d')
 // }).then(res => {
@@ -141,7 +142,7 @@ axios.post('/more/post', {
 // }).then(res => {
 //   console.log(res)
 // })
-//
+
 // const instance = axios.create({
 //   baseURL: 'https://img.mukewang.com/'
 // })
@@ -150,33 +151,33 @@ axios.post('/more/post', {
 //
 // instance.get('https://img.mukewang.com/szimg/5becd5ad0001b89306000338-360-202.jpg')
 
-// function getA() {
-//   return axios.get('/more/A')
-// }
-//
-// function getB() {
-//   return axios.get('/more/B')
-// }
-//
-// axios.all([getA(), getB()])
-//   .then(axios.spread(function(resA, resB) {
-//     console.log(resA.data)
-//     console.log(resB.data)
-//   }))
-//
-// axios.all([getA(), getB()])
-//   .then(([resA, resB]) => {
-//     console.log(resA.data)
-//     console.log(resB.data)
-//   })
-//
-// const fakeConfig = {
-//   baseURL: 'https://www.baidu.com/',
-//   url: '/user/12345',
-//   params: {
-//     idClient: 1,
-//     idTest: 2,
-//     testString: 'thisIsATest'
-//   }
-// }
-// console.log(axios.getUri(fakeConfig))
+function getA() {
+  return axios.get('/more/A')
+}
+
+function getB() {
+  return axios.get('/more/B')
+}
+
+axios.all([getA(), getB()])
+  .then(axios.spread(function(resA, resB) {
+    console.log(resA.data)
+    console.log(resB.data)
+  }))
+
+axios.all([getA(), getB()])
+  .then(([resA, resB]) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  })
+
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com/',
+  url: '/user/12345',
+  params: {
+    idClient: 1,
+    idTest: 2,
+    testString: 'thisIsATest'
+  }
+}
+console.log(axios.getUri(fakeConfig))
