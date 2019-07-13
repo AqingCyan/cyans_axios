@@ -22,7 +22,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
     // 实例化请求并发送
     const request = new XMLHttpRequest()
@@ -118,6 +119,10 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         if (xsrfValue) {
           headers[xsrfHeaderName!] = xsrfValue
         }
+      }
+      // 是否有授权处理
+      if (auth) {
+        headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
 
       Object.keys(headers).forEach(name => {
