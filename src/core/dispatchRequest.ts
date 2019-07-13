@@ -16,9 +16,17 @@ function axios(config: AxiosRequestConfig): AxiosPromise {
   // 发送请求前检测cancelToken是否被使用过
   throwIfCancellationRequested(config)
   processConfig(config)
-  return xhr(config).then(res => {
-    return transformResponseData(res)
-  })
+  return xhr(config).then(
+    res => {
+      return transformResponseData(res)
+    },
+    e => {
+      if (e && e.reponse) {
+        e.response = transformResponseData(e.response)
+      }
+      return Promise.reject(e)
+    }
+  )
 }
 
 /**
