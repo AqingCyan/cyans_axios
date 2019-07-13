@@ -145,7 +145,7 @@ export interface CancelToken {
   promise: Promise<Cancel>
   reason?: Cancel
 
-  throwIfRequest(): void
+  throwIfRequested(): void
 }
 
 // 取消方法的接口
