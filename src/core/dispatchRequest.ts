@@ -21,7 +21,7 @@ function axios(config: AxiosRequestConfig): AxiosPromise {
       return transformResponseData(res)
     },
     e => {
-      if (e && e.reponse) {
+      if (e && e.response) {
         e.response = transformResponseData(e.response)
       }
       return Promise.reject(e)
