@@ -1,18 +1,18 @@
 {
   "name": "cyans-axios",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/cyans-axios.umd.js",
   "module": "dist/cyans-axios.es5.js",
-  "typings": "dist/types/cyans-axios.d.ts",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
   "author": "AqingCyan <aqingcyan@cyanthing.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/AqingCyan/cyans_axios"
   },
   "license": "MIT",
   "engines": {
@@ -33,7 +33,9 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "prepub": "npm run test:prod && npm run build",
+    "pub": "sh release.sh"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
