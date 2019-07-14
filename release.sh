@@ -11,8 +11,8 @@ then
   # commit
   git add -A
   git commit -m "[build] $VERSION"
-  npm version $VERSION --message "[release] $VERSION" --allow-same-version
   git push origin master
+  npm version $VERSION --message "[release] $VERSION" --allow-same-version
 
   # publish
   npm publish
