@@ -11,3 +11,18 @@
 - 支持请求的取消
 - JSON 数据的自动转换
 - 客户端防止 XSS
+
+## 使用
+
+```js
+const cyanaxios = require('cyans-axios')
+
+cyanaxios({
+  method: 'post',
+  url: '/user/12345',
+  data: {
+    firstName: 'Yee',
+    lastName: 'Huang'
+  }
+})
+```
