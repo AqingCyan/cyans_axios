@@ -1,8 +1,10 @@
 # cyan's axios
 
-使用TypeScript构建一个在浏览器端使用的Axios，保证实现Axios在浏览器端的所有功能
+/azure-devops/coverage/:organization/:project/:definitionId.svg
 
-## 完成功能
+使用TypeScript构建一个在浏览器端使用的Axios，实现Axios在浏览器端的所有功能
+
+## 已实现功能
 
 - 在浏览器端使用 XMLHttpRequest 对象通讯
 - 支持 Promise API
@@ -11,6 +13,12 @@
 - 支持请求的取消
 - JSON 数据的自动转换
 - 客户端防止 XSS
+
+## 安装
+
+```bash
+npm i cyans-axios
+```
 
 ## 使用
 
@@ -23,6 +31,50 @@ cyanaxios({
   data: {
     firstName: 'Yee',
     lastName: 'Huang'
+  }
+})
+```
+
+## 具体功能
+
+### RESTful API
+
+```typescript
+export type Method =
+  | 'GET'
+  | 'get'
+  | 'DELETE'
+  | 'delete'
+  | 'HEAD'
+  | 'head'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'PUT'
+  | 'put'
+  | 'patch'
+  | 'PATCH'
+```
+
+- 简单请求发送
+
+```js
+cyanaxios({
+  method: 'post',
+  url: '/user/12345',
+  data: {
+    firstName: 'Yee',
+    lastName: 'Huang'
+  }
+})
+
+cyanaxios({
+  method: 'get',
+  url: '/simple/get',
+  params: {
+    a: 1,
+    b: 2
   }
 })
 ```
