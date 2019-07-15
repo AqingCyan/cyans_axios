@@ -1,8 +1,11 @@
 # cyan's axios
 
 ![](https://img.shields.io/badge/npm-v0.1.0-cb3837.svg)
-![](https://img.shields.io/badge/platform-chrome|firefox-lightgrey.svg)
+![](https://img.shields.io/badge/platform-chrome|firefox-orange.svg)
+![](https://img.shields.io/badge/build-passing-success.svg)
 ![](https://img.shields.io/badge/language-typescript-blue.svg)
+![](https://img.shields.io/badge/license-MIT-blueviolet.svg)
+![](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)
 
 使用TypeScript构建一个在浏览器端使用的Axios，实现Axios在浏览器端的所有功能
 
