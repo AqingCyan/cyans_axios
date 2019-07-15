@@ -1,6 +1,6 @@
 {
   "name": "cyans-axios",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "cyan's axios like axios",
   "keywords": [],
   "main": "dist/cyans-axios.umd.js",
