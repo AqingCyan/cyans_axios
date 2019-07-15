@@ -1,6 +1,6 @@
 # cyan's axios
 
-/azure-devops/coverage/:organization/:project/:definitionId.svg
+https://img.shields.io/badge/{coverage}-{100%}-{green}.svg
 
 使用TypeScript构建一个在浏览器端使用的Axios，实现Axios在浏览器端的所有功能
 
